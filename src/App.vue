@@ -1,7 +1,16 @@
 <template>
-<Home />
+<MenuBar />
+<router-view />
 </template>
 
 <script setup>
-import Home from './components/Home.vue';
+import MenuBar from './components/MenuBar.vue';
 </script>
+
+<style>
+body {
+    padding: 0;
+    margin: 0;
+}
+</style>
+
