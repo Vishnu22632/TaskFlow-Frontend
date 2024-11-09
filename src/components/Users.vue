@@ -27,7 +27,7 @@
     </div>
 
     <!-- **************************************User Dialog************************************** -->
-    <Dialog v-model:visible="visible" modal header="Add User" :style="{ width: '35rem' }">
+    <Dialog v-model:visible="visible" modal :header="isEditMode ? 'EDIT USER': 'ADD USER'" :style="{ width: '35rem' }">
 
         <Form>
 
