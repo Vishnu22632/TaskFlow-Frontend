@@ -1,12 +1,14 @@
 <template>
 <div class="card">
-    <Menubar :model="items"  style="font-size: 1.3em;"/>
+    <Menubar :model="items" class="menu" />
 </div>
 </template>
 
 <script setup>
 import Menubar from 'primevue/menubar';
-import { useRouter } from 'vue-router';
+import {
+    useRouter
+} from 'vue-router';
 
 import {
     ref
@@ -22,7 +24,7 @@ const items = ref([{
     {
         label: 'Users',
         icon: 'pi pi-users',
-        command: ()=> router.push('/users')
+        command: () => router.push('/users')
     },
     {
         label: 'Projects',
@@ -37,9 +39,23 @@ const items = ref([{
         label: 'Report',
         icon: 'pi pi-chart-line',
         command: () => router.push('/report')
+    },
+    {
+        label: 'Contact',
+        icon: 'pi pi-phone',
+        command: () => router.push('/contact')
     }
 
 ]);
 </script>
 
+<style scoped>
+.menu {
+    font-size: 1.3rem;
+    background-color: rgb(211, 211, 234);
+   
+}
 
+
+
+</style>

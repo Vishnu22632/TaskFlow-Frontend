@@ -1,3 +1,4 @@
+import Contact from "@/components/Contact.vue";
 import Home from "../components/Home.vue";
 import Projects from "../components/Projects.vue";
 import Report from "../components/Report.vue";
@@ -27,6 +28,10 @@ const routes = [
     {
         path: '/report',
         component: Report
+    },
+    {
+        path: '/contact',
+        component: Contact
     }
 ];
 
