@@ -4,8 +4,12 @@ const api_url_users = "http://localhost:9696/api/users";
 
 class UserService{
 
-    getAllUsers(){
-        return axios.get(api_url_users);
+    // getAllUsers(){
+    //     return axios.get(api_url_users);
+    // }
+
+    getAllUsers(page = 0, size = 5){
+        return axios.get(`${api_url_users}?page=${page}&size=${size}` );
     }
 
 

@@ -14,7 +14,7 @@ import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import { Form } from '@primevue/forms';
-
+import Paginator from 'primevue/paginator';
 
 
 // use services
@@ -38,6 +38,7 @@ app.component('Column',Column);
 app.component('Dialog',Dialog);
 app.component('InputText',InputText);
 app.component('Form',Form);
+app.component('Paginator',Paginator);
 
 app.use(router);
 

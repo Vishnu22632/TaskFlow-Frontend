@@ -7,8 +7,20 @@
 
     <!-- **************************************User DataTable************************************** -->
     <div class="card" style="font-size: 1.2rem;">
-        <DataTable :value="users" tableStyle="min-width: 50rem">
-            <Column field="id" header="ID"></Column>
+        <DataTable 
+        :value="users"
+        :lazy="true"
+        paginator 
+        :rows="rowsPerPage" 
+        :first="first"
+        :totalRecords="totalRecords" 
+        @page="onPage"
+        :rowsPerPageOptions="[5,10, 20, 30]" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        tableStyle="min-width: 50rem">
+           
+        <Column field="id" header="ID"></Column>
             <Column field="fullName" header="FULLNAME"></Column>
             <Column field="email" header="EMAIL"></Column>
             <Column field="password" header="PASSWORD"></Column>
@@ -23,7 +35,11 @@
                 
             </Column>
 
+            
         </DataTable>
+        
+       
+
     </div>
 
     <!-- **************************************User Dialog************************************** -->
@@ -74,11 +90,25 @@ import UserService from '../services/UserService';
 const users = ref([]);
 const visible = ref(false);
 const isEditMode = ref(false);
+const rowsPerPage = ref(5);
+const currentPage = ref(0);
+const totalRecords = ref(0);
+const first = ref(0);
 
-const loadUsers = () =>{
-    UserService.getAllUsers().then(response =>{
-        users.value = response.data;
-    })
+
+
+const loadUsers = (page = 0, size = rowsPerPage.value)=>{
+    UserService.getAllUsers(page,size).then(response =>{
+        users.value = response.data.content;
+        totalRecords.value = response.data.totalElements;
+    });
+};
+
+const onPage = (event) =>{
+    currentPage.value = event.page;
+    rowsPerPage.value = event.rows;
+    first.value = currentPage.value * rowsPerPage.value; 
+    loadUsers(currentPage.value,rowsPerPage.value);
 };
 
 const user = ref({
@@ -122,12 +152,12 @@ const closeDialog = () =>{
 const saveUser = () =>{
     if(isEditMode.value){
         UserService.updateUser(user.value.id,user.value).then(()=>{
-            loadUsers();
+            loadUsers(currentPage.value,rowsPerPage.value);
             closeDialog();
         });
     }else{
         UserService.saveUser(user.value).then(()=>{
-            loadUsers();
+            loadUsers(currentPage.value,rowsPerPage.value);
             closeDialog();
         })
     }
@@ -137,14 +167,14 @@ const saveUser = () =>{
 
 const deleteUser = (userId) =>{
     UserService.deleteUser(userId).then(()=>{
-        loadUsers();
+        loadUsers(currentPage.value,rowsPerPage.value);
     })
 }
 
 
 
 onMounted(() => {
-    loadUsers();
+    loadUsers(currentPage.value, rowsPerPage.value);
     
 });
 </script>
